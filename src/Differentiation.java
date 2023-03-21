@@ -24,15 +24,15 @@ public class Differentiation extends Calculus
 
 		//declare variables
 		String szDifferentiated = "" ;
-		String szFunction = "" ;
-		int iCoefficient = 0 ;
-		int iPower = 0 ;
-		int iDiffCoeff = 0 ;
-		int iDiffPower = 0 ;
-		int iStartTerm = 0 ;
-		String szDiffCoeff = "" ;
-		String szDiffPower = "" ;
-		int iTerm = 0 ;
+		String szFunction;
+		int iCoefficient;
+		int iPower;
+		int iDiffCoeff;
+		int iDiffPower;
+		int iStartTerm;
+		String szDiffCoeff;
+		String szDiffPower;
+		int iTerm;
 
 		//declare arrays
 		String[] szTermArray ;
@@ -49,13 +49,6 @@ public class Differentiation extends Calculus
 		//call function to find the operators within the equation and input them
 		//into an array one by one
 		szOperatorsArray = findOperators (szFunction , szTermArray.length) ;
-
-		//use an if statement to decide whether the entered function needs to be differentiated
-		//using product rule, quotient rule or normally
-		if (szFunction.contains("("))
-		{
-
-		}
 
 		//call procedure to decide solution type wanted by the user
 		decideSolType(iSolType , "\nMultiply the coefficient by the current power, then subtract 1 from the power to differentiate each term.") ;
@@ -127,7 +120,7 @@ public class Differentiation extends Calculus
 
 		//get rid of any terms that are 0x^-1 as these were originally single terms with no x therefore,
 		//when differentiating, would make 0 and so there is no reason to keep them within the equation
-		szDifferentiated = szDifferentiated.replaceAll("0\\*x\\^-1", "") ; //if its the first term
+		szDifferentiated = szDifferentiated.replaceAll("0\\*x\\^-1", "") ; //if it's the first term
 		szDifferentiated = szDifferentiated.replaceAll("\\+0\\*x\\^-1", "") ; //if the term was positive
 		szDifferentiated = szDifferentiated.replaceAll("-0\\*x\\^-1", "") ; //if the term was negative
 
@@ -151,9 +144,9 @@ public class Differentiation extends Calculus
 	public float calcGradient(String szFunction , float fXCoordinate , int iSolType)
 	{
 		//declare variables
-		String szDifferential = "" ;
-		String szSubstitutedCoord = "" ;
-		float fGradient = 0 ;
+		String szDifferential;
+		String szSubstitutedCoord;
+		float fGradient;
 
 		//differentiate the function that the user entered
 		szDifferential = differentiate(szFunction , iSolType) ;
@@ -179,15 +172,15 @@ public class Differentiation extends Calculus
 	public void calcTangOrNorm (String szFunction , int iXCoord , int iYCoord , boolean bNormal , int iSolType)
 	{
 		//declare variables
-		float fOldGradient = 0 ;
+		float fOldGradient;
 		float fNewGradient = 0 ;
-		float fRoundedGradient = 0 ;
+		float fRoundedGradient;
 		String szTangentOrNormal = "y-y1=m(x-x1)" ; //generic formula for linear equation
-		float fFirstCValue = 0 ;
-		float fFinalCValue = 0 ;
-		float fRoundedFinalCValue = 0 ;
+		float fFirstCValue;
+		float fFinalCValue;
+		float fRoundedFinalCValue;
 
-		//call function to calculate gradient of the the curve at the specified x-coordinate
+		//call function to calculate gradient of the curve at the specified x-coordinate
 		//and so the gradient of the tangent/normal at that point
 		fOldGradient = calcGradient(szFunction , iXCoord , iSolType) ;
 
@@ -195,9 +188,9 @@ public class Differentiation extends Calculus
 		decideSolType (iSolType , "      = " + (float) (Math.round(fOldGradient * 100.0) / 100.0)) ;
 
 		//use an if statement to decide if you need to calculate the tangent or normal
-		if (bNormal == true)
+		if (bNormal)
 		{
-			//use an if statement to check if the original gradient is 0 or not, if its not, then calculate the new gradient
+			//use an if statement to check if the original gradient is 0 or not, if it's not, then calculate the new gradient
 			if (fOldGradient != 0)
 			{
 				//calculate the negative reciprocal of the gradient
@@ -277,7 +270,7 @@ public class Differentiation extends Calculus
 			//use an if statement to check if the gradient is negative or not
 			if (fNewGradient <= 0)
 			{
-				//as the gradient is negative and the first c value is negative, that means that the right side had a + sign
+				//as the gradient is negative and the first c value is negative, that means that the right side had a + sign,
 				//so we need to search for a + sign instead of a -
 
 				//don't add any operator sign on the right hand side was here side as that will be covered by the fact that the current
@@ -286,7 +279,7 @@ public class Differentiation extends Calculus
 			}
 			else
 			{
-				//as the gradient is positive and the first c value is negative, that means that the right side had a - sign
+				//as the gradient is positive and the first c value is negative, that means that the right side had a - sign,
 				//so we need to search for a - sign, so we don't input any sign to search for as that - sign is included
 				//as part of the x value
 
@@ -302,7 +295,7 @@ public class Differentiation extends Calculus
 			//use an if statement to check if the gradient is negative or not
 			if (fNewGradient <= 0)
 			{
-				//as the gradient is negative but the first c value is positive, that means that the right side had a - sign
+				//as the gradient is negative but the first c value is positive, that means that the right side had a - sign,
 				//so we need to search for a - sign instead of a +, so we don't input any sign to search for as that - sign is included
 				//as part of the x value
 
@@ -311,7 +304,7 @@ public class Differentiation extends Calculus
 			}
 			else
 			{
-				//as the gradient is positive and the first c value is positive, that means that the right side had a + sign
+				//as the gradient is positive and the first c value is positive, that means that the right side had a + sign,
 				//so we need to search for a + sign
 
 				//make sure that the sign on the right side is a + when building the string
@@ -359,8 +352,8 @@ public class Differentiation extends Calculus
 			szTangentOrNormal = szTangentOrNormal.substring(0 , szTangentOrNormal.length() - 4 ) ; // the last 4 characters will be -0.0 so eliminate them
 		}
 
-		//print out the final result, using an if statement to decide if its a tangent or normal
-		if (bNormal == true)
+		//print out the final result, using an if statement to decide if it's a tangent or normal
+		if (bNormal)
 		{
 
 			System.out.println(szTangentOrNormal + "    <-- Equation of Normal");
@@ -376,19 +369,19 @@ public class Differentiation extends Calculus
 	public void calcStatPoints(String szEquation , int iSolType)
 	{
 		//declare variables
-		String szDifferential = "" ;
-		String szCurrentTerm = "" ;
-		String szSubstitutedValue = "" ;
-		int iDiscriminant = 0 ;
-		int iStartTerm = 0 ;
-		String[] szTermArray ;
-		int[] iQuadCoeffs = new int[3] ;
-		float[] fXCoordinates ;
-		float[] fYCoordinates ;
-		int iTermAmount = 0 ;
-		boolean bSquaredTerm = false ;
-		boolean bXTerm = false ;
-		boolean bConstant = false ;
+		String szDifferential;
+		String szCurrentTerm;
+		String szSubstitutedValue;
+		int iDiscriminant;
+		int iStartTerm;
+		String[] szTermArray;
+		int[] iQuadCoeffs = new int[3];
+		float[] fXCoordinates;
+		float[] fYCoordinates;
+		int iTermAmount;
+		boolean bSquaredTerm = false;
+		boolean bXTerm = false;
+		boolean bConstant = false;
 
 		//call function to differentiate the entered equation once
 		szDifferential = differentiate (szEquation , iSolType) ;
@@ -463,10 +456,10 @@ public class Differentiation extends Calculus
 			}//end if
 
 			//assign the correct value to a
-			if (bSquaredTerm == true)
+			if (bSquaredTerm)
 			{
 				//fetch the coefficient of x^2 and parse it into an int
-				iQuadCoeffs[0] = Integer.parseInt(String.valueOf(szTermArray[iStartTerm].substring(0, (szTermArray[iStartTerm].indexOf("*"))))) ;
+				iQuadCoeffs[0] = Integer.parseInt(szTermArray[iStartTerm].substring(0, (szTermArray[iStartTerm].indexOf("*")))) ;
 				//the last part of the statement is so that it fetches all the digit prior to the * sign, just in case the coefficient is greater than one digit
 
 				//use an if statement to check if the coefficient should be negative based on if there is a minus sign before it
@@ -478,18 +471,12 @@ public class Differentiation extends Calculus
 				}//end if
 
 			}
-			else
-			{
-				//set the x^2 coefficient of 0
-				iQuadCoeffs[0] = 0 ;
-
-			}//end if
 
 			//assign the correct value to b
-			if (bXTerm == true)
+			if (bXTerm)
 			{
 				//fetch the coefficient of x and parse it into an int
-				iQuadCoeffs[1] = Integer.parseInt(String.valueOf(szTermArray[iStartTerm + 1].substring(0, (szTermArray[iStartTerm + 1].indexOf("*"))))) ;
+				iQuadCoeffs[1] = Integer.parseInt(szTermArray[iStartTerm + 1].substring(0, (szTermArray[iStartTerm + 1].indexOf("*")))) ;
 				//the last part of the statement is so that it fetches all the digit prior to the * sign, just in case the coefficient is greater than one digit
 
 				//use an if statement to check if the coefficient should be negative based on if there is a minus sign before it
@@ -500,18 +487,12 @@ public class Differentiation extends Calculus
 
 				}//end if
 			}
-			else
-			{
-				//set the x coefficient of 0
-				iQuadCoeffs[1] = 0 ;
-
-			}//end if
 
 			//assign the correct value to c
-			if (bConstant == true)
+			if (bConstant)
 			{
 				//fetch the constant and parse it into an int
-				iQuadCoeffs[2] = Integer.parseInt(String.valueOf(szTermArray[iStartTerm + 2].substring(0, (szTermArray[iStartTerm + 2].indexOf("*"))))) ;
+				iQuadCoeffs[2] = Integer.parseInt(szTermArray[iStartTerm + 2].substring(0, (szTermArray[iStartTerm + 2].indexOf("*")))) ;
 				//the last part of the statement is so that it fetches all the digit prior to the * sign, just in case the coefficient is greater than one digit
 
 				//use an if statement to check if the coefficient should be negative based on if there is a minus sign before it
@@ -522,12 +503,6 @@ public class Differentiation extends Calculus
 
 				}//end if
 			}
-			else
-			{
-				//set the constant to 0
-				iQuadCoeffs[2] = 0 ;
-
-			}//end if
 
 			//call procedure to decide solution type wanted by the user
 			decideSolType(iSolType , "\nb^2 - 4ac = (" + iQuadCoeffs[1] + ")^2 - 4(" + iQuadCoeffs[0] + ")(" + iQuadCoeffs[2] + ")");
@@ -724,7 +699,7 @@ public class Differentiation extends Calculus
 					iCoefficients[iStartTerm] = iCoefficients[iStartTerm] * -1 ;
 
 					//check if the constant term needs to be negative or positive based on the operator found in front of it
-					if (szOperators[1] == "-")
+					if (szOperators[1].equals("-"))
 					{
 						//multiply the constant term by -1
 						iCoefficients[iStartTerm + 1] = iCoefficients[iStartTerm + 1] * -1 ;
@@ -745,7 +720,7 @@ public class Differentiation extends Calculus
 				else
 				{
 					//check if the constant term needs to be negative or positive based on the operator found in front of it
-					if (szOperators[0] == "-")
+					if (szOperators[0].equals("-"))
 					{
 						//multiply the constant term by -1
 						iCoefficients[iStartTerm + 1] = iCoefficients[iStartTerm + 1] * -1 ;
@@ -777,7 +752,7 @@ public class Differentiation extends Calculus
 				decideSolType(iSolType , szLinearEquation )  ;
 
 				//subtract the constant term from both sides and remove the constant term from the RHS
-				szLinearEquation = szLinearEquation.replaceAll("0=", String.valueOf( 0 - iCoefficients[iStartTerm + 1]) + "=" ).replaceAll
+				szLinearEquation = szLinearEquation.replaceAll("0=", (-iCoefficients[iStartTerm + 1]) + "=" ).replaceAll
 						("\\+" + iCoefficients[iStartTerm + 1], "").replaceAll("x" + iCoefficients[iStartTerm + 1], "x") ;
 
 				//call procedure to decide solution type wanted by the user
@@ -787,7 +762,7 @@ public class Differentiation extends Calculus
 				szLinearEquation = szLinearEquation.replaceAll("", "") ;
 
 				//calculate the value of x
-				fXCoordinates[0] = (float) (0 - iCoefficients[iStartTerm + 1]) / iCoefficients[iStartTerm] ; 
+				fXCoordinates[0] = (float) (-iCoefficients[iStartTerm + 1]) / iCoefficients[iStartTerm] ;
 
 				//call procedure to decide solution type wanted by the user
 				decideSolType(iSolType , "x=" + (float) Math.round(fXCoordinates[0] * 100) / 100 )  ;
@@ -851,10 +826,10 @@ public class Differentiation extends Calculus
 	public void decideStatPointNature (String szEquation , float fXCoord , int iSolType)
 	{
 		//declare variables
-		String szFirstDerivative = "" ;
-		String szSecondDerivative = "" ;
-		String szSubstitutedX = "" ;
-		float fCalculatedSecond = 0 ;
+		String szFirstDerivative;
+		String szSecondDerivative;
+		String szSubstitutedX;
+		float fCalculatedSecond;
 
 		//call procedure to decide solution type wanted by the user
 		decideSolType(iSolType , "\nIn order to distinguish the nature of the stationary point, we need to find the second derivative\n"
@@ -926,8 +901,8 @@ public class Differentiation extends Calculus
 	{
 		//declare differentiation object
 		Differentiation DiffObject = new Differentiation() ;
-		String szResult = "" ;
-		float fGradient = 0 ;
+		String szResult;
+		float fGradient;
 
 		//testing differentiation function
 		szResult = DiffObject.differentiate("12*x^0-4*x^1+2*x^2" , 1) ;

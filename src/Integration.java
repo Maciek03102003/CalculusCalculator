@@ -18,15 +18,15 @@ public class Integration extends Calculus
 	{
 		//declare variables
 		String szIntegrated = "" ;
-		String szFunction = "" ;
-		int iCoefficient = 0 ;
-		int iPower = 0 ;
-		float fIntegCoeff = 0 ;
-		int iIntegCoeff = 0 ;
-		int iIntegPower = 0 ;
-		String szIntegCoeff = "" ;
-		String szIntegPower = "" ;
-		int iTerm = 0 ;
+		String szFunction;
+		int iCoefficient;
+		int iPower;
+		float fIntegCoeff;
+		int iIntegCoeff;
+		int iIntegPower;
+		String szIntegCoeff;
+		String szIntegPower;
+		int iTerm;
 
 		//declare arrays
 		String[] szTermArray ;
@@ -115,7 +115,7 @@ public class Integration extends Calculus
 		}//end for
 
 		//replace any double operator signs with the correct singular sign
-		szIntegrated = szIntegrated.replaceAll("\\-\\-" , "\\+").replaceAll("\\+\\-", "-") ;
+		szIntegrated = szIntegrated.replaceAll("--" , "+").replaceAll("\\+-", "-") ;
 
 		//return the integrated function
 		return szIntegrated ;
@@ -126,12 +126,12 @@ public class Integration extends Calculus
 	public float calcDefiniteArea (String szCurve , int iLowerBound , int iUpperBound , int iSolType)
 	{
 		//declare variables
-		float fUpperArea = 0 ;
-		float fLowerArea = 0 ;
-		float fTotalArea = 0 ;
-		String szIntegral = "" ;
-		String szUpperSubstituted = "" ;
-		String szLowerSubstituted = "" ;
+		float fUpperArea;
+		float fLowerArea;
+		float fTotalArea;
+		String szIntegral;
+		String szUpperSubstituted;
+		String szLowerSubstituted;
 
 		//integrate the entered function 
 		szIntegral = integrate(szCurve , iSolType) ;
@@ -175,13 +175,13 @@ public class Integration extends Calculus
 	public double calcAreaTrap (String szFunction , int iLowerBound , int iUpperBound , int iBarAmount , int iSolType)
 	{
 		//declare variables
-		String szSubstitutedXValue = "" ;
+		String szSubstitutedXValue;
 		float[] fXValues = new float[iBarAmount + 1] ;
 		float[] fYValues = new float[iBarAmount + 1] ;
-		double dArea = 0 ;
+		double dArea;
 		float fTrapRuleBracket = 0 ;
-		float fBarWidth = 0 ;
-		float fCurrentXValue = 0 ;
+		float fBarWidth;
+		float fCurrentXValue;
 
 		//call procedure to decide solution type wanted by the user
 		decideSolType(iSolType , "\nFirstly, we need to calculate the width of each bar, so that we can calculate all the required x-values.\n") ;
@@ -207,7 +207,7 @@ public class Integration extends Calculus
 		//call procedure to decide solution type wanted by the user
 		decideSolType(iSolType , "X-Value 1 = " + iLowerBound) ;
 
-		//use a for loop to calculate all of the x values
+		//use a for loop to calculate all the x values
 		for (int i = 1 ; i < fXValues.length ; i ++ )
 		{
 			//assign the next x value to the next index of the array of x values
@@ -271,9 +271,9 @@ public class Integration extends Calculus
 	public void calcPercentError (String szFunction , int iLowerBound , int iUpperBound , int iBarAmount , int iSolType)
 	{
 		//declare variables
-		double dDefiniteArea = 0 ;
-		double dEstimateArea = 0 ;
-		double dPercentError = 0 ;
+		double dDefiniteArea;
+		double dEstimateArea;
+		double dPercentError;
 
 		//call procedure to decide solution type wanted by the user
 		decideSolType(iSolType , "\nIn order to calculate the %% error in the estimate made by the trapezium rule, we firstly need to calculate\n"

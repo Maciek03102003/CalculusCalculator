@@ -21,7 +21,7 @@ public class MainConsole
 	{
 		//declare variables
 		Scanner szKeyboard = new Scanner (System.in) ; 
-		String szCoord = "" ;
+		String szCoord;
 
 		//prompt the user to enter the coordinate
 		System.out.print("\nPlease enter the " + szCoordType + "-Coordinate: ");
@@ -56,8 +56,8 @@ public class MainConsole
 		Scanner szKeyboard = new Scanner (System.in) ;
 
 		//declare variables
-		String szSolutionType = "" ;
-		int iSolutionType = 0 ;
+		String szSolutionType;
+		int iSolutionType;
 
 		//ask the user if they would like to see a full solution, step-by-step solution or just the answer
 		System.out.println("\nWould you like:\n1. A step-by-step Solution\n2. A full solution\n3. The Answer");
@@ -93,9 +93,9 @@ public class MainConsole
 		Calculus CalcObject = new Calculus() ;
 
 		//declare variables
-		String szEquation = "" ;
-		String szXCoord = "" ;
-		String szYCoord = "" ;
+		String szEquation;
+		String szXCoord;
+		String szYCoord;
 		int iXCoord = 0 ;
 		int iYCoord = 0 ;
 		boolean bValidCoord = false ;
@@ -151,18 +151,8 @@ public class MainConsole
 			//leave a line between the previous and next output
 			System.out.println();
 
-			//use an if statement to decide if you need to calculate a tangent or normal
-			if (szTangOrNorm.equals("tangent"))
-			{
-				//call procedure to calculate the tangent
-				DiffObject.calcTangOrNorm(szEquation, iXCoord, iYCoord , false , iSolutionType) ;
-			}
-			else
-			{
-				//call procedure to calculate the normal
-				DiffObject.calcTangOrNorm(szEquation, iXCoord, iYCoord , true , iSolutionType) ;
-
-			}//end if
+			//calculate the tangent/normal
+			DiffObject.calcTangOrNorm(szEquation, iXCoord, iYCoord , !szTangOrNorm.equals("tangent"), iSolutionType) ;
 
 		}
 		else if (bExit)
@@ -183,14 +173,14 @@ public class MainConsole
 
 		//declare variables
 		Scanner szKeyboard = new Scanner (System.in) ;
-		String szEquation = "" ;
-		String szLowerBound = "" ;
-		String szUpperBound = "" ;
-		String szBarAmount = "" ;
-		int iBarAmount = 0 ;
+		String szEquation;
+		String szLowerBound;
+		String szUpperBound;
+		String szBarAmount;
+		int iBarAmount;
 		int iLowerBound = 0 ;
 		int iUpperBound = 0 ;
-		boolean bValidLimits = false ;
+		boolean bValidLimits;
 		double dAreaOrPercent = 0 ;
 
 		//prompt the user to enter the equation to integrate
@@ -212,7 +202,7 @@ public class MainConsole
 			szUpperBound = szKeyboard.nextLine() ;
 
 			//use an if statement to check if the upper and lower limits are both integers
-			if (!szLowerBound.matches("-?[0-9]{1,}") || !szUpperBound.matches("-?[0-9]{1,}") )
+			if (!szLowerBound.matches("-?[0-9]+") || !szUpperBound.matches("-?[0-9]+") )
 			{
 				//print out the error message
 				System.out.println("Those are not valid limits!\n");
@@ -243,12 +233,6 @@ public class MainConsole
 					//set bValidLimits to false
 					bValidLimits = false ;
 				}
-				else
-				{
-					//set bValidLimits to true
-					bValidLimits = true ;
-
-				}//end if
 
 			}//end if 
 
@@ -262,7 +246,7 @@ public class MainConsole
 			szBarAmount = szKeyboard.nextLine() ; 
 
 			//use a while loop to check if the user has entered a valid bar amount
-			while (!szBarAmount.matches("[0-9]{1,}"))
+			while (!szBarAmount.matches("[0-9]+"))
 			{
 				//print out the error message
 				System.out.println("That is not a valid bar amount!\n");
@@ -287,7 +271,7 @@ public class MainConsole
 			szBarAmount = szKeyboard.nextLine() ; 
 
 			//use a while loop to check if the user has entered a valid bar amount
-			while (!szBarAmount.matches("[0-9]{1,}"))
+			while (!szBarAmount.matches("[0-9]+"))
 			{
 				//print out the error message
 				System.out.println("That is not a valid bar amount!\n");
@@ -319,7 +303,7 @@ public class MainConsole
 	public void useMainMenu()
 	{
 		//declare variables
-		String szMenuChoice = "" ;
+		String szMenuChoice;
 		Scanner szKeyboard = new Scanner (System.in) ;
 
 		//output the option menu
@@ -333,7 +317,7 @@ public class MainConsole
 		szMenuChoice = szKeyboard.nextLine() ;
 
 		//use a while loop to check if the user entered a valid option
-		while (!szMenuChoice.matches("[1-3]{1}"))
+		while (!szMenuChoice.matches("[1-3]"))
 		{
 			//print out the error message
 			System.out.println("Sorry! That isn't a valid input!") ;
@@ -345,27 +329,17 @@ public class MainConsole
 		}// end while
 
 		//use a switch case to see which menu option the user chose
-		switch (szMenuChoice)
-		{
-		case "1":
-			//call procedure to output differentiation menu
-			useDiffMenu() ;
+		switch (szMenuChoice) {
+			case "1" ->
+				//call procedure to output differentiation menu
+					useDiffMenu();
+			case "2" ->
+				//call procedure to output integration menu
+					useIntegMenu();
+			case "3" ->
 
-			break ;
-
-		case "2":
-			//call procedure to output integration menu
-			useIntegMenu() ;
-
-			break ;
-
-		case "3":
-
-			//print out the end message
-			System.out.println("\nThank you for using our calculator!\nGoodbye!") ;
-
-			break ;
-
+				//print out the end message
+					System.out.println("\nThank you for using our calculator!\nGoodbye!");
 		}//end switch case
 
 	}//end procedure
@@ -378,16 +352,16 @@ public class MainConsole
 		Calculus CalcObject = new Calculus() ;
 
 		//declare variables
-		String szDiffChoice = "" ; 
+		String szDiffChoice;
 		Scanner szKeyboard = new Scanner (System.in) ;
-		String szEquation = "" ;
-		String szDifferential = "" ; 
-		String szPrinciplesChoice = "" ;
+		String szEquation;
+		String szDifferential;
+		String szPrinciplesChoice;
 		String szFileName = "" ;
-		float fXCoord = 0 ;
-		String szXCoord = "" ;
-		int iSolType = 0 ;
-		boolean bValidCoord = false ;
+		float fXCoord;
+		String szXCoord;
+		int iSolType;
+		boolean bValidCoord;
 
 		//output the option menu
 		System.out.println("\n======= Differentiation =======\n"
@@ -405,7 +379,7 @@ public class MainConsole
 		szDiffChoice = szKeyboard.nextLine() ;
 
 		//use a while loop to check if the user entered a valid option
-		while (!szDiffChoice.matches("[1-8]{1}"))
+		while (!szDiffChoice.matches("[1-8]}"))
 		{
 			//print out the error message
 			System.out.println("Sorry! That isn't a valid input!") ;
@@ -417,181 +391,160 @@ public class MainConsole
 		}// end while
 
 		//use a switch case to check what the user input
-		switch (szDiffChoice)
-		{
-		case "1":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
+		switch (szDiffChoice) {
+			case "1" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			//prompt the user to enter the equation to differentiate
-			System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
-					+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n") ;
-			szEquation = szKeyboard.nextLine() ;
+				//prompt the user to enter the equation to differentiate
+				System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
+						+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n");
+				szEquation = szKeyboard.nextLine();
 
-			//call the function to differentiate the equation
-			szEquation = DiffObject.differentiate(szEquation , iSolType) ;
+				//call the function to differentiate the equation
+				szEquation = DiffObject.differentiate(szEquation, iSolType);
 
-			//output the differentiated equation but replace all *'s, ^1's and x^0's with nothing to create a cleaner output
-			System.out.println("The differential is: " + szEquation.replaceAll("\\*", "").replaceAll("\\^1", "").replaceAll("x\\^0", ""));
+				//output the differentiated equation but replace all *'s, ^1's and x^0's with nothing to create a cleaner output
+				System.out.println("The differential is: " + szEquation.replaceAll("\\*", "").replaceAll("\\^1", "").replaceAll("x\\^0", ""));
+			}
+			case "2" -> {
+				//declare variables
+				float fGradient;
 
-			break ;
-		case "2":
-			//declare variables
-			float fGradient = 0 ;
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
+				//prompt the user to enter the equation to differentiate
+				System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
+						+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n");
+				szEquation = szKeyboard.nextLine();
 
-			//prompt the user to enter the equation to differentiate
-			System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
-					+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n") ;
-			szEquation = szKeyboard.nextLine() ;
-
-			//call function to enter and validate coordinate and convert what it returns to a float
-			szXCoord = inputCoord("X") ;
-			fXCoord = Float.parseFloat(szXCoord) ;
-
-			//leave a line between the previous and next output
-			System.out.println();
-
-			//call procedure to calculate the gradient
-			fGradient = DiffObject.calcGradient(szEquation, fXCoord , iSolType) ;
-
-			//output the gradient to the user
-			System.out.println("Gradient = " + (float) (Math.round(fGradient * 100.0) / 100.0)); //round gradient to 2dp
-
-			break ;
-		case "3":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
-
-			//call procedure to input all the information to calculate the tangent and calculate it
-			inputCalcLine("tangent" , iSolType) ;
-
-			break ;
-		case "4":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
-
-			//call procedure to input all the information to calculate the normal and calculate it
-			inputCalcLine("normal" , iSolType) ;
-
-			break ;
-		case "5":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
-
-			//prompt the user to enter the equation to differentiate
-			System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
-					+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only , Max Cubic, Highest Power First)\n") ;
-			szEquation = szKeyboard.nextLine() ;
-
-			//call procedure to calculate stationary points
-			DiffObject.calcStatPoints(szEquation, iSolType) ;
-
-			break ;
-		case "6":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
-
-			//prompt the user to enter the equation to differentiate
-			System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
-					+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n") ;
-			szEquation = szKeyboard.nextLine() ;
-			
-			//use a do while loop to make the user keep inputting the coordinates until they have input a stationary point on the line
-			//to exit
-			do
-			{
 				//call function to enter and validate coordinate and convert what it returns to a float
-				szXCoord = inputCoord("X") ;
-				fXCoord = Float.parseFloat(szXCoord) ;
+				szXCoord = inputCoord("X");
+				fXCoord = Float.parseFloat(szXCoord);
 
-				//call function to differentiate equation entered by user and call function to check if the coordinate
-				//entered by the user is actually a stationary point on the entered function
-				szDifferential = DiffObject.differentiate(szEquation, 3) ;
-				bValidCoord = CalcObject.checkCoord(szDifferential, fXCoord, 0) ;
+				//leave a line between the previous and next output
+				System.out.println();
 
-				//use an if statement to check if the coordinates are valid or not
-				if (bValidCoord == false)
-				{
-					//print out the error message to the user
-					System.out.println("\nThis point is not a stationary point on the entered function! Please enter a"
-							+ " stationary point on the function!");
+				//call procedure to calculate the gradient
+				fGradient = DiffObject.calcGradient(szEquation, fXCoord, iSolType);
 
-				}//end if 
+				//output the gradient to the user
+				System.out.println("Gradient = " + (float) (Math.round(fGradient * 100.0) / 100.0)); //round gradient to 2dp
+			}
+			case "3" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			} while(bValidCoord == false) ;
+				//call procedure to input all the information to calculate the tangent and calculate it
+				inputCalcLine("tangent", iSolType);
+			}
+			case "4" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			//call procedure to decide the nature of the stationary point at the entered x coordinate
-			DiffObject.decideStatPointNature(szEquation, fXCoord, iSolType) ;
+				//call procedure to input all the information to calculate the normal and calculate it
+				inputCalcLine("normal", iSolType);
+			}
+			case "5" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			break ;
-		case "7":
-			//output the option menu
-			System.out.println("\n======= First Principles =======\n"
-					+ "1. x²\n"
-					+ "2. 6x²\n"
-					+ "3. x³\n"
-					+ "4. Sinx\n"
-					+ "5. Cosx") ;
+				//prompt the user to enter the equation to differentiate
+				System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
+						+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only , Max Cubic, Highest Power First)\n");
+				szEquation = szKeyboard.nextLine();
 
-			//prompt the user to enter a menu choice
-			System.out.print("\nPlease choose an example to see from the Menu: ") ;
-			szPrinciplesChoice = szKeyboard.nextLine() ;
+				//call procedure to calculate stationary points
+				DiffObject.calcStatPoints(szEquation, iSolType);
+			}
+			case "6" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			//use a while loop to check if the user entered a valid option
-			while (!szPrinciplesChoice.matches("[1-5]{1}"))
-			{
-				//print out the error message
-				System.out.println("Sorry! That isn't a valid input!") ;
+				//prompt the user to enter the equation to differentiate
+				System.out.println("\nPlease enter the equation to be differentiated in the following format\n"
+						+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n");
+				szEquation = szKeyboard.nextLine();
+
+				//use a do while loop to make the user keep inputting the coordinates until they have input a stationary point on the line
+				//to exit
+				do {
+					//call function to enter and validate coordinate and convert what it returns to a float
+					szXCoord = inputCoord("X");
+					fXCoord = Float.parseFloat(szXCoord);
+
+					//call function to differentiate equation entered by user and call function to check if the coordinate
+					//entered by the user is actually a stationary point on the entered function
+					szDifferential = DiffObject.differentiate(szEquation, 3);
+					bValidCoord = CalcObject.checkCoord(szDifferential, fXCoord, 0);
+
+					//use an if statement to check if the coordinates are valid or not
+					if (!bValidCoord) {
+						//print out the error message to the user
+						System.out.println("\nThis point is not a stationary point on the entered function! Please enter a"
+								+ " stationary point on the function!");
+
+					}//end if
+
+				} while (!bValidCoord);
+
+				//call procedure to decide the nature of the stationary point at the entered x coordinate
+				DiffObject.decideStatPointNature(szEquation, fXCoord, iSolType);
+			}
+			case "7" -> {
+				//output the option menu
+				System.out.println("\n======= First Principles =======\n"
+						+ "1. x²\n"
+						+ "2. 6x²\n"
+						+ "3. x³\n"
+						+ "4. Sinx\n"
+						+ "5. Cosx");
 
 				//prompt the user to enter a menu choice
-				System.out.print("\nPlease choose an example to see from the Menu: ") ;
-				szPrinciplesChoice = szKeyboard.nextLine() ;
+				System.out.print("\nPlease choose an example to see from the Menu: ");
+				szPrinciplesChoice = szKeyboard.nextLine();
 
-			}// end while
+				//use a while loop to check if the user entered a valid option
+				while (!szPrinciplesChoice.matches("[1-5]")) {
+					//print out the error message
+					System.out.println("Sorry! That isn't a valid input!");
 
-			//use an if statement to decide which example the user chose and so which file
-			//to use
-			if (szPrinciplesChoice.equals("1"))
-			{
-				//assign the correct file name
-				szFileName = "x^2.tex" ;
+					//prompt the user to enter a menu choice
+					System.out.print("\nPlease choose an example to see from the Menu: ");
+					szPrinciplesChoice = szKeyboard.nextLine();
+
+				}// end while
+
+
+				//use an if statement to decide which example the user chose and so which file
+				//to use
+				switch (szPrinciplesChoice) {
+					case "1" ->
+						//assign the correct file name
+							szFileName = "x^2.tex";
+					case "2" ->
+						//assign the correct file name
+							szFileName = "6x^2.tex";
+					case "3" ->
+						//assign the correct file name
+							szFileName = "x^3.tex";
+					case "4" ->
+						//assign the correct file name
+							szFileName = "Sinx.tex";
+					case "5" ->
+						//assign the correct file name
+							szFileName = "Cosx.tex";
+				}
+
+
+				//call procedure to make the pdf file with the example for the user
+				DiffObject.diffWithPrinciples(szFileName);
 			}
-			else if (szPrinciplesChoice.equals("2"))
-			{
-				//assign the correct file name
-				szFileName = "6x^2.tex" ;
-			}
-			else if (szPrinciplesChoice.equals("3"))
-			{
-				//assign the correct file name
-				szFileName = "x^3.tex" ;
-			}
-			else if (szPrinciplesChoice.equals("4"))
-			{
-				//assign the correct file name
-				szFileName = "Sinx.tex" ;
-			}
-			else if (szPrinciplesChoice.equals("5"))
-			{
-				//assign the correct file name
-				szFileName = "Cosx.tex" ;
+			case "8" ->
 
-			}//end if
-
-			//call procedure to make the pdf file with the example for the user
-			DiffObject.diffWithPrinciples(szFileName) ;
-
-			break ;
-		case "8":
-
-			//call procedure to output main menu
-			useMainMenu() ;
-
-			break ;
-
+				//call procedure to output main menu
+					useMainMenu();
 		}//end switch case
 
 		//call procedure to output main menu
@@ -607,11 +560,11 @@ public class MainConsole
 
 		//declare variables
 		Scanner szKeyboard = new Scanner (System.in) ;
-		String szIntegChoice = "" ;
-		String szEquation = "" ;
-		String szIntegral = "" ;
-		int iSolType = 0 ;
-		double dArea = 0 ;
+		String szIntegChoice;
+		String szEquation;
+		String szIntegral;
+		int iSolType;
+		double dArea;
 
 		//output the option menu
 		System.out.println("\n======= Integration =======\n"
@@ -626,7 +579,7 @@ public class MainConsole
 		szIntegChoice = szKeyboard.nextLine() ;
 
 		//use a while loop to check if the user entered a valid option
-		while (!szIntegChoice.matches("[1-5]{1}"))
+		while (!szIntegChoice.matches("[1-5]"))
 		{
 			//print out the error message
 			System.out.println("Sorry! That isn't a valid input!") ;
@@ -638,72 +591,62 @@ public class MainConsole
 		}// end while
 
 		//use a switch case to check what the user has input
-		switch (szIntegChoice)
-		{
-		case "1":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
+		switch (szIntegChoice) {
+			case "1" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			//prompt the user to enter the equation to integrate
-			System.out.println("\nPlease enter the equation to be integrated in the following format\n"
-					+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n") ;
-			szEquation = szKeyboard.nextLine() ;
+				//prompt the user to enter the equation to integrate
+				System.out.println("\nPlease enter the equation to be integrated in the following format\n"
+						+ "a*x^n+b*x^n-1+...+y*x^1+z*x^0 (Integers Only)\n");
+				szEquation = szKeyboard.nextLine();
 
-			//call the function to integrate the equation
-			szIntegral = IntegObject.integrate(szEquation , iSolType) ;
+				//call the function to integrate the equation
+				szIntegral = IntegObject.integrate(szEquation, iSolType);
 
-			//output the integrated equation but replace all *'s, ^1's and x^0's with nothing to create a cleaner output
-			System.out.println("The integral is: " + szIntegral.replaceAll("\\*", "").replaceAll("\\^1", "").replaceAll("x\\^0", "") + "+c   < -- Add constant of integration");
+				//output the integrated equation but replace all *'s, ^1's and x^0's with nothing to create a cleaner output
+				System.out.println("The integral is: " + szIntegral.replaceAll("\\*", "").replaceAll("\\^1", "").replaceAll("x\\^0", "") + "+c   < -- Add constant of integration");
+			}
+			case "2" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			break ;
-		case "2":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
+				//call procedure to input all info to calculate the definite area
+				dArea = inputCalcAreaInfo("definite", iSolType);
 
-			//call procedure to input all info to calculate the definite area
-			dArea = inputCalcAreaInfo ("definite" , iSolType) ;
+				//use an if statement to check if the user just wants the answer
+				if (iSolType == 3) {
+					//print out the answer for the user
+					System.out.println("\nArea = " + (double) Math.round(dArea * 100) / 100);
 
-			//use an if statement to check if the user just wants the answer
-			if (iSolType == 3)
-			{
-				//print out the answer for the user
-				System.out.println("\nArea = " + (double) Math.round(dArea * 100) / 100) ;
+				}//end if
+			}
+			case "3" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			}//end if
+				//call procedure to input all info to calculate the estimated area
+				dArea = inputCalcAreaInfo("trap", iSolType);
 
-			break ;
-		case "3":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
+				//use an if statement to check if the user just wants the answer
+				if (iSolType == 3) {
+					//print out the answer for the user
+					System.out.println("\nArea = " + (double) Math.round(dArea * 100) / 100);
 
-			//call procedure to input all info to calculate the estimated area
-			dArea = inputCalcAreaInfo ("trap" , iSolType) ;
+				}//end if
+			}
+			case "4" -> {
+				//call procedure to input desired solution type
+				iSolType = inputSolType();
 
-			//use an if statement to check if the user just wants the answer
-			if (iSolType == 3)
-			{
-				//print out the answer for the user
-				System.out.println("\nArea = " + (double) Math.round(dArea * 100) / 100) ;
+				//call procedure to input all info to calculate both areas and then calculate the percent error
+				//in the estimate
+				inputCalcAreaInfo("percent", iSolType);
+			}
+			case "5" ->
 
-			}//end if
-
-			break ;
-		case "4":
-			//call procedure to input desired solution type
-			iSolType = inputSolType() ;
-
-			//call procedure to input all info to calculate both areas and then calculate the percent error
-			//in the estimate
-			inputCalcAreaInfo ("percent" , iSolType) ;
-
-			break ;
-		case "5":
-
-			//call procedure to output main menu
-			useMainMenu() ;
-
-			break ;
-
+				//call procedure to output main menu
+					useMainMenu();
 		}//end switch case
 
 		//call procedure to output main menu

@@ -20,9 +20,9 @@ public class Calculus
 	public String checkNegative(String szInput)
 	{
 		//declare variables
-		char chCurrentCharacter = '\0' ;
-		char chPreviousCharacter = '\0' ;
-		String szCurrentCharacter = "" ;
+		char chCurrentCharacter;
+		char chPreviousCharacter;
+		String szCurrentCharacter;
 		String szEquation = "" ;
 
 		//use a for loop to go through all the characters within the equation to check if there
@@ -43,7 +43,7 @@ public class Calculus
 				{
 					//change the current character to an _
 					chCurrentCharacter = '_' ; //replies any minus that involves a negative power with a _ in order to differentiate
-					//them from the operator - so that the program doesn't split the equation on it and it
+					//them from the operator - so that the program doesn't split the equation on it, and it
 					//can be easily identified later by knowing which character it was replaced by
 				}
 
@@ -64,7 +64,7 @@ public class Calculus
 
 	}//end function
 
-	//function to split the the user's input on the passed character(s) into an array
+	//function to split the user's input on the passed character(s) into an array
 	public String[] splitInput(String szInput , String szSplitter)
 	{
 		//declare array
@@ -81,10 +81,10 @@ public class Calculus
 	public String[] findOperators(String szInput , int iTermAmount)
 	{
 		//declare variables
-		char chCurrentCharacter = '\0' ;
-		String szCurrentCharacter = "" ;
+		char chCurrentCharacter;
+		String szCurrentCharacter;
 		int iCharacterIndex = 0 ;
-		String[] szOpArray ;
+		String[] szOpArray;
 		int iOpAmount = 0 ;
 
 		//instantiate the operator array based on the number of terms. Although there will be one less operators than
@@ -104,7 +104,7 @@ public class Calculus
 			szCurrentCharacter = String.valueOf(chCurrentCharacter) ;
 
 			//use an if statement to decide if the current character is a 
-			//+, a - or a negative power
+			//+, an - or a negative power
 			if (szCurrentCharacter.equals("+"))
 			{
 				//assign a + to the current operator index
@@ -139,8 +139,8 @@ public class Calculus
 	public String substitute(String szEquation , float fXCoord)
 	{
 		//declare variables
-		char chCurrentCharacter = '\0' ;
-		String szCurrentCharacter = "" ;
+		char chCurrentCharacter;
+		String szCurrentCharacter;
 		String szSubstitutedFunc = "" ;
 
 		//use a for loop to go through the equation and locate all the x's and place brackets
@@ -183,12 +183,12 @@ public class Calculus
 	public boolean checkCoord (String szFunction , float fX , float fY)
 	{
 		//declare variables
-		boolean bValid = false ;
-		int iTerm = 0 ;
-		int iPower = 0 ;
-		int iCoefficient = 0 ;
+		boolean bValid;
+		int iTerm;
+		int iPower;
+		int iCoefficient;
 		float fTotalResult = 0 ; 
-		float fCurrentTermResult = 0 ;
+		float fCurrentTermResult ;
 		String[] szTermsArray ;
 		String[] szOperatorsArray ;
 		String[] szCoefficientsArray ;
@@ -232,7 +232,7 @@ public class Calculus
 			//and then multiplying by the current coefficient
 			fCurrentTermResult = (float) ((Math.pow(fX, iPower)) * iCoefficient) ;
 
-			//use an if statement to decide if its the first term or not. If it is the first term you will add it to the gradient
+			//use an if statement to decide if it's the first term or not. If it is the first term you will add it to the gradient
 			//not matter what, if not you need to check which operator to use
 			if (iTerm != 0)
 			{
@@ -260,18 +260,8 @@ public class Calculus
 		
 		}//end for
 		
-		//use an if statement to decide if the coordinate exists on the line
-		if (fTotalResult == (float) fY)
-		{
-			//set bValid to true
-			bValid = true ;
-		}
-		else
-		{
-			//set bValid to false
-			bValid = false ;
-
-		}//end if
+		//decide if the coordinate exists on the line
+		bValid = fTotalResult == fY;
 
 		return bValid ;
 
@@ -285,11 +275,11 @@ public class Calculus
 		String[] szOperatorsArray ;
 		String[] szCoefficientsArray ;
 		String[] szPowersArray ;
-		int iTerm = 0 ;
-		int iPower = 0 ;
-		int iStartTerm = 0 ;
-		float fCoefficient = 0 ;
-		float fCurrentTermResult = 0 ;
+		int iTerm ;
+		int iPower ;
+		int iStartTerm ;
+		float fCoefficient ;
+		float fCurrentTermResult ;
 		float fTotalResult = 0 ;
 
 		//call function to check for negative powers
@@ -342,7 +332,7 @@ public class Calculus
 			//use an if statement to check if the current term has an x and if the x-coordinate
 			//entered is 0. If so, the current term result will be 0
 			if (szTermsArray[iTerm].contains("x") && fXValue == 0 && !szTermsArray[iTerm].contains("x^0")) //the last part is so that
-				//it doesn't enter the if if the term has x^0
+				//it doesn't enter the if the term has x^0
 				//as that means it has no x component
 			{
 				//set the current term result to 0
@@ -356,7 +346,7 @@ public class Calculus
 
 			}//end if
 
-			//use an if statement to decide if its the first term or not. If it is the first term you will add it to the gradient
+			//use an if statement to decide if it's the first term or not. If it is the first term you will add it to the gradient
 			//not matter what, if not you need to check which operator to use
 			if (iTerm != 0)
 			{
@@ -401,7 +391,7 @@ public class Calculus
 
 		}//end if
 
-		//use an if statement to decide if the user wants a step by step solution
+		//use an if statement to decide if the user wants a step-by-step solution
 		if (iSolType == 1)
 		{
 			//get the user to hit enter before seeing the next step
@@ -411,7 +401,7 @@ public class Calculus
 		else if (iSolType == 2)
 		{
 			//make a gap between this output and the next
-			System.out.println("");
+			System.out.println();
 
 		}//end if
 
